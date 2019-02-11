@@ -42,7 +42,24 @@ namespace CreditCardApplications.Tests
             Mock<IFrequentFlyerNumberValidator> mockValidator =
                 new Mock<IFrequentFlyerNumberValidator>();
 
-            mockValidator.Setup(x => x.IsValid("x")).Returns(true);
+
+            //mockValidator
+            //    .Setup(x => x.IsValid(It.IsAny<string>()))
+            //    .Returns(true);
+            //mockValidator
+            //    .Setup(x => x.IsValid(It.Is<string>(number => number.StartsWith('x'))))
+            //    .Returns(true);
+            //mockValidator
+            //    .Setup(x => x.IsValid(It.IsIn("x","y","z")))
+            //    .Returns(true);
+            //mockValidator
+            //    .Setup(x => x.IsValid(It.IsInRange("b","z",Range.Inclusive)))
+            //    .Returns(true);
+            mockValidator
+                .Setup(x => x.IsValid(It.IsRegex("[a-z]",
+                        System.Text.RegularExpressions.RegexOptions.None)))
+                .Returns(true);
+
 
             var sut = new CreditCardApplicationEvaluator(mockValidator.Object);
 
