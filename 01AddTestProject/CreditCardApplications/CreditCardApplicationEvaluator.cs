@@ -10,7 +10,8 @@
 
         public CreditCardApplicationEvaluator(IFrequentFlyerNumberValidator validator)
         {
-            _validator = validator;
+            _validator = validator ?? 
+                throw  new System.ArgumentNullException(nameof(validator));
         }
 
         public CreditCardApplicationDecision Evaluate(CreditCardApplication application)
@@ -18,6 +19,14 @@
             if (application.GrossAnnualIncome >= HighIncomeThreshhold)
             {
                 return CreditCardApplicationDecision.AutoAccepted;
+            }
+
+            var isValidFrequentFlyerNumber =
+                _validator.IsValid(application.FrequentFlyerNumber);
+
+            if (!isValidFrequentFlyerNumber)
+            {
+                return CreditCardApplicationDecision.ReferredToHuman;
             }
 
             if (application.Age <= AutoReferralMaxAge)
