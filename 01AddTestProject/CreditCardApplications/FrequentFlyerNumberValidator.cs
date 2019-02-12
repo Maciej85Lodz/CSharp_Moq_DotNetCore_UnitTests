@@ -23,5 +23,13 @@ namespace CreditCardApplications
         {
             throw new NotImplementedException("For demo purposes");
         }
+
+        public string LicenseKey
+        {
+            get
+            {
+                throw new NotImplementedException("For demo purposes");
+            }
+        }
     }
 }
