@@ -27,7 +27,12 @@ namespace CreditCardApplications.Tests
             Mock<IFrequentFlyerNumberValidator> mockValidator =
                 new Mock<IFrequentFlyerNumberValidator>();
 
-            mockValidator.Setup(x => x.IsValid(It.IsAny<string>())).Returns(true);
+            mockValidator
+                .Setup(x => x.IsValid(It.IsAny<string>()))
+                .Returns(true);
+            //mockValidator
+            //    .Setup(x => x.ServiceInformation.License.LicenseKey);
+            mockValidator.DefaultValue = DefaultValue.Mock;
 
             var sut = new CreditCardApplicationEvaluator(mockValidator.Object);
 
@@ -54,6 +59,10 @@ namespace CreditCardApplications.Tests
                                 System.Text.RegularExpressions.RegexOptions.None)))
                          .Returns(true);
 
+            mockValidator
+                .Setup(x => x.ServiceInformation.License.LicenseKey)
+                .Returns("OK");
+
             var sut = new CreditCardApplicationEvaluator(mockValidator.Object);
 
             var application = new CreditCardApplication
@@ -74,7 +83,12 @@ namespace CreditCardApplications.Tests
             Mock<IFrequentFlyerNumberValidator> mockValidator =
                 new Mock<IFrequentFlyerNumberValidator>();
 
-            mockValidator.Setup(x => x.IsValid(It.IsAny<string>())).Returns(false);
+            mockValidator
+                .Setup(x => x.IsValid(It.IsAny<string>()))
+                .Returns(false);
+            mockValidator
+                .Setup(x => x.ServiceInformation.License.LicenseKey)
+                .Returns("OK");
 
             var sut = new CreditCardApplicationEvaluator(mockValidator.Object);
 
