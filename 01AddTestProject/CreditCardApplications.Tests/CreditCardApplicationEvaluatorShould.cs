@@ -154,5 +154,27 @@ namespace CreditCardApplications.Tests
             // E.g. read from vendor-supplied constants file
             return "EXPIRED";
         }
+
+        [Fact]
+        public void UseDetailedLookupForOlderApplications()
+        {
+            var mockValidator = new Mock<IFrequentFlyerNumberValidator>();
+
+            mockValidator.SetupAllProperties();
+            mockValidator
+                .Setup(x => x.ServiceInformation.License.LicenseKey)
+                .Returns("OK");
+
+            //mockValidator
+            //    .SetupProperty(x => x.ValidationMode);
+
+            var sut = new CreditCardApplicationEvaluator(mockValidator.Object);
+
+            var application = new CreditCardApplication {Age = 30};
+
+            CreditCardApplicationDecision decision = sut.Evaluate(application);
+
+            Assert.Equal(ValidationMode.Detailed,mockValidator.Object.ValidationMode);
+        }
     }
 }
