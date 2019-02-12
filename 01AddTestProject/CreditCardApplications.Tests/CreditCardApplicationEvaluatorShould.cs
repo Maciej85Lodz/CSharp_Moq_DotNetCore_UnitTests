@@ -170,11 +170,11 @@ namespace CreditCardApplications.Tests
 
             var sut = new CreditCardApplicationEvaluator(mockValidator.Object);
 
-            var application = new CreditCardApplication {Age = 30};
+            var application = new CreditCardApplication { Age = 30 };
 
             CreditCardApplicationDecision decision = sut.Evaluate(application);
 
-            Assert.Equal(ValidationMode.Detailed,mockValidator.Object.ValidationMode);
+            Assert.Equal(ValidationMode.Detailed, mockValidator.Object.ValidationMode);
         }
 
         [Fact]
@@ -188,11 +188,30 @@ namespace CreditCardApplications.Tests
 
             var sut = new CreditCardApplicationEvaluator(mockValidator.Object);
 
-            var application = new CreditCardApplication{FrequentFlyerNumber = "q"};
+            var application = new CreditCardApplication { FrequentFlyerNumber = "q" };
 
             sut.Evaluate(application);
 
-            mockValidator.Verify(x=>x.IsValid(It.IsAny<string>()));
+            mockValidator.Verify(x => x.IsValid(It.IsAny<string>()));
         }
+
+        //[Fact]
+        //public void ShouldValidateFrequentFlyerNumberForLowIncomeApplications_CustomMessage()
+        //{
+        //    var mockValidator = new Mock<IFrequentFlyerNumberValidator>();
+
+        //    mockValidator
+        //        .Setup(x => x.ServiceInformation.License.LicenseKey)
+        //        .Returns("OK");
+
+        //    var sut = new CreditCardApplicationEvaluator(mockValidator.Object);
+
+        //    var application = new CreditCardApplication { FrequentFlyerNumber = "q" };
+
+        //    sut.Evaluate(application);
+
+        //    mockValidator.Verify(x => x.IsValid(It.IsNotNull<string>()),
+        //        "Freaquent flyer number passed should not be null.");
+        //}
     }
 }
