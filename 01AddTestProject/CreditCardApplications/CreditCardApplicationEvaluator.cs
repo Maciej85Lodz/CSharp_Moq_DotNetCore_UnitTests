@@ -32,6 +32,7 @@
             var isValidFrequentFlyerNumber =
                 _validator.IsValid(application.FrequentFlyerNumber);
 
+
             if (!isValidFrequentFlyerNumber)
             {
                 return CreditCardApplicationDecision.ReferredToHuman;

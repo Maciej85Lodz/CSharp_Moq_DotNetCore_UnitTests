@@ -178,7 +178,7 @@ namespace CreditCardApplications.Tests
         }
 
         [Fact]
-        public void ShouldValidateFrequentFlyerNumberForLowIncomeApplications()
+        public void ValidateFrequentFlyerNumberForLowIncomeApplications()
         {
             var mockValidator = new Mock<IFrequentFlyerNumberValidator>();
 
@@ -192,7 +192,7 @@ namespace CreditCardApplications.Tests
 
             sut.Evaluate(application);
 
-            mockValidator.Verify(x => x.IsValid(It.IsAny<string>()));
+            mockValidator.Verify(x => x.IsValid(It.IsAny<string>()),Times.Once);
         }
 
         //[Fact]
