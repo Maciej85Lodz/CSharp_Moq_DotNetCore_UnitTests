@@ -10,8 +10,8 @@
 
         public CreditCardApplicationEvaluator(IFrequentFlyerNumberValidator validator)
         {
-            _validator = validator ?? 
-                throw  new System.ArgumentNullException(nameof(validator));
+            _validator = validator ??
+                throw new System.ArgumentNullException(nameof(validator));
         }
 
         public CreditCardApplicationDecision Evaluate(CreditCardApplication application)
@@ -46,31 +46,32 @@
 
             return CreditCardApplicationDecision.ReferredToHuman;
         }
-        public CreditCardApplicationDecision EvaluateUsingOut(CreditCardApplication application)
-        {
-            if (application.GrossAnnualIncome >= HighIncomeThreshhold)
-            {
-                return CreditCardApplicationDecision.AutoAccepted;
-            }
 
-            _validator.IsValid(application.FrequentFlyerNumber, out var isValidFrequentFlyerNumber);
+        //public CreditCardApplicationDecision EvaluateUsingOut(CreditCardApplication application)
+        //{
+        //    if (application.GrossAnnualIncome >= HighIncomeThreshhold)
+        //    {
+        //        return CreditCardApplicationDecision.AutoAccepted;
+        //    }
 
-            if (!isValidFrequentFlyerNumber)
-            {
-                return CreditCardApplicationDecision.ReferredToHuman;
-            }
+        //    _validator.IsValid(application.FrequentFlyerNumber, out var isValidFrequentFlyerNumber);
 
-            if (application.Age <= AutoReferralMaxAge)
-            {
-                return CreditCardApplicationDecision.ReferredToHuman;
-            }
+        //    if (!isValidFrequentFlyerNumber)
+        //    {
+        //        return CreditCardApplicationDecision.ReferredToHuman;
+        //    }
 
-            if (application.GrossAnnualIncome < LowIncomeThreshhold)
-            {
-                return CreditCardApplicationDecision.AutoDeclined;
-            }
+        //    if (application.Age <= AutoReferralMaxAge)
+        //    {
+        //        return CreditCardApplicationDecision.ReferredToHuman;
+        //    }
 
-            return CreditCardApplicationDecision.ReferredToHuman;
-        }
+        //    if (application.GrossAnnualIncome < LowIncomeThreshhold)
+        //    {
+        //        return CreditCardApplicationDecision.AutoDeclined;
+        //    }
+
+        //    return CreditCardApplicationDecision.ReferredToHuman;
+        //}
     }
 }
