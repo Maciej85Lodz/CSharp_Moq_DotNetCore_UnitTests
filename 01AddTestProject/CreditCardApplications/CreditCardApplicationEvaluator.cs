@@ -29,8 +29,17 @@
             _validator.ValidationMode = application.Age >= 30 ? ValidationMode.Detailed : 
                                                                 ValidationMode.Quick;
 
-            var isValidFrequentFlyerNumber =
-                _validator.IsValid(application.FrequentFlyerNumber);
+            bool isValidFrequentFlyerNumber;
+            try
+            {
+                isValidFrequentFlyerNumber =
+                    _validator.IsValid(application.FrequentFlyerNumber);
+            }
+            catch (System.Exception)
+            {
+                //log
+                return CreditCardApplicationDecision.ReferredToHuman;
+            }
 
 
             if (!isValidFrequentFlyerNumber)
