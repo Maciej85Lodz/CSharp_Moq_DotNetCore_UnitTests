@@ -287,5 +287,28 @@ namespace CreditCardApplications.Tests
 
             Assert.Equal(CreditCardApplicationDecision.ReferredToHuman, decision);
         }
+
+        [Fact]
+        public void IncrementLookupCount()
+        {
+            Mock<IFrequentFlyerNumberValidator> mockValidator 
+                = new Mock<IFrequentFlyerNumberValidator>();
+            mockValidator
+                .Setup(x => x.ServiceInformation.License.LicenseKey)
+                .Returns("OK");
+            mockValidator
+                .Setup(x => x.IsValid(It.IsAny<string>()))
+                .Returns(true)
+                .Raises(x=>x.ValidatorLookupPerformed+=null, EventArgs.Empty);
+
+            var sut = new CreditCardApplicationEvaluator(mockValidator.Object);
+
+            var application = new CreditCardApplication { FrequentFlyerNumber = "x", Age = 25 };
+
+            sut.Evaluate(application);
+            //mockValidator.Raise(x=>x.ValidatorLookupPerformed+=null,EventArgs.Empty);
+            
+            Assert.Equal(1, sut.ValidatorLookupCount);
+        }
     }
 }
