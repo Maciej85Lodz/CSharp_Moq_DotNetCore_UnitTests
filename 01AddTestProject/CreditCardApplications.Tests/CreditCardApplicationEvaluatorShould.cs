@@ -126,8 +126,12 @@ namespace CreditCardApplications.Tests
         {
             var mockValidator = new Mock<IFrequentFlyerNumberValidator>();
 
-            mockValidator.Setup(x => x.IsValid(It.IsAny<string>())).Returns(true);
-            mockValidator.Setup(x => x.LicenseKey).Returns("EXPIRED");
+            mockValidator
+                .Setup(x => x.IsValid(It.IsAny<string>()))
+                .Returns(true);
+            mockValidator
+                .Setup(x => x.LicenseKey)
+                .Returns("EXPIRED");
 
             var sut = new CreditCardApplicationEvaluator(mockValidator.Object);
 
