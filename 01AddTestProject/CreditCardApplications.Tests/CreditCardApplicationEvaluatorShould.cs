@@ -131,7 +131,7 @@ namespace CreditCardApplications.Tests
                 .Returns(true);
             mockValidator
                 .Setup(x => x.LicenseKey)
-                .Returns("EXPIRED");
+                .Returns(GetLicenseKeyExpiryString);
 
             var sut = new CreditCardApplicationEvaluator(mockValidator.Object);
 
@@ -140,6 +140,11 @@ namespace CreditCardApplications.Tests
             CreditCardApplicationDecision decision = sut.Evaluate(application);
 
             Assert.Equal(CreditCardApplicationDecision.ReferredToHuman, decision);
+        }
+
+        string GetLicenseKeyExpiryString()
+        {
+            return "EXPIRED";
         }
     }
 }
