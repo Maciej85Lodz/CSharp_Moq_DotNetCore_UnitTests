@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Runtime.CompilerServices;
 
 namespace CreditCardApplications
 {
@@ -18,6 +17,7 @@ namespace CreditCardApplications
         {
             _validator = validator ??
                 throw new System.ArgumentNullException(nameof(validator));
+
             _validator.ValidatorLookupPerformed += ValidatorLookupPerformed;
         }
 
