@@ -334,5 +334,24 @@ namespace CreditCardApplications.Tests
             CreditCardApplicationDecision seconDecision = sut.Evaluate(application);
             Assert.Equal(CreditCardApplicationDecision.AutoDeclined, seconDecision);
         }
+
+        [Fact]
+        public void RefferFraudRisk()
+        {
+            Mock<IFrequentFlyerNumberValidator> mockValidator =
+                new Mock<IFrequentFlyerNumberValidator>();
+
+            Mock<Fraudlookup> mockFraudLookup = new Mock<Fraudlookup>();
+            mockFraudLookup
+                .Setup(x => x.IsFraudRisk(It.IsAny<CreditCardApplication>()))
+                .Returns(true);
+
+            var sut = new CreditCardApplicationEvaluator(mockValidator.Object, mockFraudLookup.Object);
+
+            var application = new CreditCardApplication();
+
+            CreditCardApplicationDecision decision = sut.Evaluate(application);
+            Assert.Equal(CreditCardApplicationDecision.RefferedToHumanFraudRisk, decision);
+        }
     }
 }
